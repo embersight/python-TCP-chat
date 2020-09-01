@@ -18,22 +18,28 @@ def user_input():
 
 def continuously_send(connection, version):
     while True:
-        type = MessageType.CHAT.value
-        message = user_input()
-        if message=="" or message==" ":
-            continue
-        if message=="exit()" or message=="quit()":
-            type = MessageType.COMMAND.value
+        try:
+            type = MessageType.CHAT.value
+            message = user_input()
+            if message=="" or message==" ":
+                continue
+            if message=="exit()" or message=="quit()":
+                type = MessageType.COMMAND.value
 
-        send_packet(connection, form_packet(version,type,message))
+            send_packet(connection, form_packet(version,type,message))
+        except:
+            quit()
 
 def continuously_receive(connection):
     while True:
-        packet = receive_packet(connection)
-        print()
-        sys.stdout.write("\033[F"+"\033[K") #previous line and delete
-        print(message_from_packet(packet))
-        print("Input: ", end='', flush=True)
+        try:
+            packet = receive_packet(connection)
+            print()
+            sys.stdout.write("\033[F"+"\033[K") #previous line and delete
+            print(message_from_packet(packet))
+            print("Input: ", end='', flush=True)
+        except:
+            quit()
 
 def main():
     # Command line parser
@@ -86,6 +92,7 @@ def main():
                 print(f'Chat has ended.')
                 close_socket(s)
                 break
+        quit()
 
     except socket.error as err:
         pass
