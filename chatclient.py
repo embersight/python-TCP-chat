@@ -6,20 +6,18 @@ import socket
 from packet_functions import *
 
 def user_input(name):
-    response = input("")
+    print()
+    sys.stdout.write("\033[F"+"\033[K") #previous line and delete
+    response = input("Input: ")
+    sys.stdout.write("\033[F"+"\033[K") #previous line and delete
     return (name+": "+response)
 
 def continuously_send(connection, name, version, message_type):
-    print("Input: ", end='', flush=True)
     while True:
         message = user_input(name)
-        if message==f'{name}: ' or message==f'{name}:  ':
-            sys.stdout.write("\033[F"+"\033[K") #previous line and delete
-            print("Input: ", end='', flush=True)
+        if message==str(f'{name}: ') or message==str(f'{name}:  '):
             continue
-        if message==f'{name}: exit()':
-            sys.stdout.write("\033[F"+"\033[K") #previous line and delete
-            print("Input: ", end='', flush=True)
+        if message==str(f'{name}: exit()'):
             break
         send_packet(connection, form_packet(version,message_type,message))
 
