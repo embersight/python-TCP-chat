@@ -5,10 +5,10 @@ import threading
 
 from packet_functions import *
 
-def new_client(connection_list, clientsocket):
+def new_client(connection_list, clientsocket, address):
     while True:
         packet = receive_packet(clientsocket)
-        logging.info(f'{clientsocket} said "{message_from_packet}".')
+        logging.info(f'{address} said "{message_from_packet(packet)}".')
         for connection in connection_list:
             send_packet(connection, packet)
 
@@ -48,7 +48,7 @@ def main():
                 connection_list.append(c)
                 logging.info(f'Connection from {addr} has been established.')
                 try:
-                    user_input_thread = threading.Thread(target=new_client, args=[connection_list,c])
+                    user_input_thread = threading.Thread(target=new_client, args=[connection_list,c,addr])
                     user_input_thread.daemon = True
                     user_input_thread.start()
                 except:
