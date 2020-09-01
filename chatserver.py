@@ -11,7 +11,10 @@ def new_client(connection_list, version, clientsocket, address):
         packet = receive_packet(clientsocket)
         name = message_from_packet(packet)
         if version_from_packet(packet)!=version:
-            connection_list.pop((clientsocket,address))
+            try:
+                connection_list.pop((clientsocket,address))
+            except:
+                pass
             exit()
         if message_type_from_packet(packet)==MessageType.SETUP.value:
             number = 0
@@ -41,7 +44,10 @@ def new_client(connection_list, version, clientsocket, address):
 
                 if(message_from_packet(packet)=="quit()" or message_from_packet(packet)=="exit()"):
                     logging.info(f'Connection from {address} has been withdrawn.')
-                    connection_list.pop((clientsocket,address))
+                    try:
+                        connection_list.pop((clientsocket,address))
+                    except:
+                        pass
                     for connection in connection_list:
                         send_packet(connection[0], form_packet(version, MessageType.CHAT.value, f'{name} has left the chat'))
                     exit()
@@ -50,7 +56,10 @@ def new_client(connection_list, version, clientsocket, address):
                 pass
     except:
         logging.info(f'Connection from {address} has been withdrawn.')
-        connection_list.pop((clientsocket,address))
+        try:
+            connection_list.pop((clientsocket,address))
+        except:
+            pass
         exit()
 
 def main():
