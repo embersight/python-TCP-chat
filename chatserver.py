@@ -11,11 +11,7 @@ def new_client(connection_list, version, clientsocket, address):
         packet = receive_packet(clientsocket)
         name = message_from_packet(packet)
         if version_from_packet(packet)!=version:
-            try:
-                connection_list.pop((clientsocket,address))
-            except:
-                pass
-            exit()
+            raise SystemExit
         if message_type_from_packet(packet)==MessageType.SETUP.value:
             number = 0
             for key in connection_list:
@@ -24,11 +20,11 @@ def new_client(connection_list, version, clientsocket, address):
             if number!=0:
                 name = name+str(number)
         else:
-            exit()
+            raise SystemExit
 
         connection_list[(clientsocket,address)] = name
         send_packet(clientsocket, form_packet(version, MessageType.SETUP.value, name))
-        time.sleep(0.5)
+        time.sleep(0.1)
         for connection in connection_list:
             send_packet(connection[0], form_packet(version, MessageType.CHAT.value, f'{name} has entered the chat.'))
 
@@ -43,14 +39,7 @@ def new_client(connection_list, version, clientsocket, address):
             elif message_type_from_packet(packet)==MessageType.COMMAND.value:
 
                 if(message_from_packet(packet)=="quit()" or message_from_packet(packet)=="exit()"):
-                    logging.info(f'Connection from {address} has been withdrawn.')
-                    try:
-                        connection_list.pop((clientsocket,address))
-                    except:
-                        pass
-                    for connection in connection_list:
-                        send_packet(connection[0], form_packet(version, MessageType.CHAT.value, f'{name} has left the chat'))
-                    exit()
+                    raise SystemExit
 
             else:
                 pass
@@ -60,7 +49,10 @@ def new_client(connection_list, version, clientsocket, address):
             connection_list.pop((clientsocket,address))
         except:
             pass
+        for connection in connection_list:
+            send_packet(connection[0], form_packet(version, MessageType.CHAT.value, f'{name} has left the chat'))
         exit()
+
 
 def main():
     # Command Line Parser
@@ -106,6 +98,8 @@ def main():
                 user_input_thread.start()
 
             except (BlockingIOError, InterruptedError, ConnectionAbortedError):
+                pass
+            except:
                 pass
 
         close_socket(s)

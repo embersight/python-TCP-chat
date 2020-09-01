@@ -36,7 +36,7 @@ def continuously_receive(connection):
     while True:
         try:
             packet = receive_packet(connection)
-            print()
+            print("",end='\n',flush=True)
             sys.stdout.write("\033[F"+"\033[K") #previous line and delete
             print(message_from_packet(packet))
             print("Input: ", end='', flush=True)
