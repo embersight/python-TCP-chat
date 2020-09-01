@@ -24,6 +24,7 @@ def continuously_send(connection, version):
             continue
         if message=="exit()" or message=="quit()":
             type = MessageType.COMMAND.value
+
         send_packet(connection, form_packet(version,type,message))
 
 def continuously_receive(connection):
