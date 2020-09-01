@@ -21,10 +21,12 @@ def continuously_send(connection, name, version, message_type):
         send_packet(connection, form_packet(version,message_type,message))
 
 def continuously_receive(connection):
-    packet = receive_packet(connection)
-    sys.stdout.write("\033[K") #delete current line
-    print(message_from_packet(packet))
-    print("Input: ", end='')
+    while True:
+        packet = receive_packet(connection)
+        print()
+        sys.stdout.write("\033[F"+"\033[K") #previous line and delete
+        print(message_from_packet(packet))
+        print("Input: ", end='')
 
 def main():
     # Command line parser
