@@ -33,6 +33,14 @@ def send_packet(connection, packet):
     connection.send(packet)
 
 def receive_packet(connection):
+    head = connection.recv(12)
+    version, message_type, message_length = struct.unpack("IiI", head)
+    body = connection.recv(message_length)
+    return (head+body)
+
+
+"""
+def receive_packet(connection):
     amount_received = 0
     amount_expected = struct.calcsize("IiI")
 
@@ -46,3 +54,4 @@ def receive_packet(connection):
     version, message_type, message_length = struct.unpack("IiI", head)
     body = connection.recv(message_length)
     return (head+body)
+"""

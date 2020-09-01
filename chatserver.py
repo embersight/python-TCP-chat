@@ -45,10 +45,10 @@ def main():
                 # Connect with a client
                 c, addr = s.accept()
                 connection_list.append(c)
-                logging.info(f'Connection from {address} has been established.')
+                logging.info(f'Connection from {addr} has been established.')
                 try:
                     user_input_thread = threading.Thread(target=new_client, args=[connection_list,c])
-                    user_input_thread.daemon = False
+                    user_input_thread.daemon = True
                     user_input_thread.start()
                 except:
                     connection_list.remove(c)
