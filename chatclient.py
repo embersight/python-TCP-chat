@@ -24,6 +24,7 @@ def continuously_receive(connection):
     while True:
         packet = receive_packet(connection)
         print()
+        sys.stdout.flush()
         sys.stdout.write("\033[F"+"\033[K") #previous line and delete
         print(message_from_packet(packet))
         print("Input: ", end='')
@@ -92,18 +93,6 @@ def main():
     except:
         print(f'Socket unknown error occured.')
 
-
-    """
-    connection = ""
-    user = threading.Thread(target=continuously_send_input, args=[connection, name, version, message_type])
-    user.daemon = True
-    user.start()
-    while True:
-        time.sleep(3)
-        prompt = "John: Hello, I am talking to you from outer space and I am wondering if you have the items I am looking for"
-        sys.stdout.write("\n"+"\033[F"+"\033[K") #back to previous line
-        print(prompt + "\nInput: ", end=" ")
-    """
 
 if __name__ == '__main__':
     main()
