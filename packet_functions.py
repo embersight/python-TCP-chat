@@ -1,5 +1,11 @@
 import socket
 import struct
+from enum import Enum
+
+class MessageType(Enum):
+    SETUP = 0
+    COMMAND = 1
+    CHAT = 2
 
 def close_socket(connection):
     try:
@@ -37,21 +43,3 @@ def receive_packet(connection):
     version, message_type, message_length = struct.unpack("IiI", head)
     body = connection.recv(message_length)
     return (head+body)
-
-
-"""
-def receive_packet(connection):
-    amount_received = 0
-    amount_expected = struct.calcsize("IiI")
-
-    head = b''
-    while amount_received < amount_expected:
-        data = connection.recv(12)
-        amount_received += len(data)
-        if len(data)>0:
-            head += data
-
-    version, message_type, message_length = struct.unpack("IiI", head)
-    body = connection.recv(message_length)
-    return (head+body)
-"""

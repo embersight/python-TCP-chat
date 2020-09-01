@@ -2,15 +2,37 @@ from argparse import ArgumentParser, SUPPRESS
 import socket
 import logging
 import threading
+import time
 
 from packet_functions import *
 
-def new_client(connection_list, clientsocket, address):
+def new_client(connection_list, version, clientsocket, address):
+    packet = receive_packet(clientsocket)
+    name = message_from_packet(packet)
+    if version_from_packet(packet)!=version:
+        connection_list.pop((clientsocket,address))
+        exit()
+    if message_type_from_packet(packet)==MessageType.SETUP.value:
+        number = 0
+        for key in connection_list:
+            if connection_list[key]==name:
+                number = number+1
+        if number!=0:
+            name = name+str(number)
+    else:
+        exit()
+
+    connection_list[(clientsocket,address)] = name
+    send_packet(clientsocket, form_packet(version, MessageType.SETUP.value, name))
+    time.sleep(0.2)
+    for connection in connection_list:
+        send_packet(connection[0], form_packet(version, MessageType.CHAT.value, f'{name} has entered the chat.'))
+
     while True:
         packet = receive_packet(clientsocket)
-        logging.info(f'{address[0]} said "{message_from_packet(packet)}".')
+        logging.info(f'{name} said "{message_from_packet(packet)}".')
         for connection in connection_list:
-            send_packet(connection, packet)
+            send_packet(connection[0], form_packet(version, MessageType.CHAT.value, f'{name}: {message_from_packet(packet)}'))
 
 def main():
     # Command Line Parser
@@ -31,6 +53,9 @@ def main():
     # Logging Setup
     logging.basicConfig(level=logging.NOTSET,filename=logpath,filemode='w',format='%(asctime)s.%(msecs)03d | %(levelname)s: %(message)s',datefmt='%d-%B-%Y %H:%M:%S')
 
+    # Server Setup
+    version = 1
+
     try:
         # Socket setup
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -40,19 +65,17 @@ def main():
         s.listen(10)
         logging.info(f'Socket is listening.')
 
-        connection_list = list()
+        connection_list = {}
         while True:
             try:
                 # Connect with a client
                 c, addr = s.accept()
-                connection_list.append(c)
+                connection_list[(c,addr)] = "NOTSET"
                 logging.info(f'Connection from {addr} has been established.')
-                try:
-                    user_input_thread = threading.Thread(target=new_client, args=[connection_list,c,addr])
-                    user_input_thread.daemon = True
-                    user_input_thread.start()
-                except:
-                    pass
+
+                user_input_thread = threading.Thread(target=new_client, args=[connection_list,version,c,addr])
+                user_input_thread.daemon = True
+                user_input_thread.start()
             except (BlockingIOError, InterruptedError, ConnectionAbortedError):
                 pass
 

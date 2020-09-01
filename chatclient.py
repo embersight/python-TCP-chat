@@ -5,21 +5,21 @@ import socket
 
 from packet_functions import *
 
-def user_input(name):
+def user_input():
     print()
     sys.stdout.write("\033[F"+"\033[K") #previous line and delete
     response = input("Input: ")
     sys.stdout.write("\033[F"+"\033[K") #previous line and delete
-    return (name+": "+response)
+    return response
 
-def continuously_send(connection, name, version, message_type):
+def continuously_send(connection, version):
     while True:
-        message = user_input(name)
-        if message==str(f'{name}: ') or message==str(f'{name}:  '):
+        message = user_input()
+        if message=="" or message==" ":
             continue
-        if message==str(f'{name}: exit()'):
+        if message=="exit()"):
             break
-        send_packet(connection, form_packet(version,message_type,message))
+        send_packet(connection, form_packet(version,MessageType.CHAT.value,message))
 
 def continuously_receive(connection):
     while True:
@@ -47,31 +47,33 @@ def main():
 
     # Client packet+message information
     version = 1
-    message_type = 1
     if not args["name"]:
         name = input("Your Name: ")
-        sys.stdout.write("\033[F"+"\033[K") #previous line and delete
         if len(name)>15:
             name = "Default"
     else:
         name = args["name"]
-    print(f'Your name will be named {name} for the chat.\n')
 
     try:
         # Socket setup
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((address, port))
-        print(f'Chat has been started.')
 
-        # Chat Input
-        user_input_thread = threading.Thread(target=continuously_send, args=[s, name, version, message_type])
-        user_input_thread.daemon = False
-        user_input_thread.start()
+        send_packet(s, form_packet(version,MessageType.SETUP.value,name))
+        packet = receive_packet(s)
+        sys.stdout.write("\033[F"+"\033[K") #previous line and delete
+        print(f'Your name will be named {message_from_packet(packet)} for the chat.\n')
+        print(f'Chat has been started.')
 
         # Chat Output
         output_thread = threading.Thread(target=continuously_receive, args=[s])
         output_thread.daemon = False
         output_thread.start()
+
+        # Chat Input
+        user_input_thread = threading.Thread(target=continuously_send, args=[s, name, version, message_type])
+        user_input_thread.daemon = False
+        user_input_thread.start()
 
         while True:
             if not user_input_thread.is_alive():
