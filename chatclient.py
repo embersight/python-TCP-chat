@@ -13,12 +13,15 @@ def user_input(name):
 def continuously_send(connection, name, version, message_type):
     while True:
         message = user_input(name)
+        if message=="" or message==" ":
+            continue
         if message=="exit()":
             break
         send_packet(connection, form_packet(version,message_type,message))
 
 def continuously_receive(connection):
     packet = receive_packet(connection)
+    sys.stdout.write("\033[K") #clear current line
     print(message_from_packet(packet))
 
 def main():
