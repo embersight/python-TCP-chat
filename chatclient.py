@@ -24,11 +24,9 @@ def continuously_receive(connection):
     while True:
         packet = receive_packet(connection)
         print()
-        sys.stdout.flush()
         sys.stdout.write("\033[F"+"\033[K") #previous line and delete
         print(message_from_packet(packet))
-        print("Input: ", end='')
-        sys.stdout.write("\033[<5>C") #move cursor
+        print("Input: ", end='', flush=True)
 
 def main():
     # Command line parser
