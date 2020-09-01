@@ -3,7 +3,7 @@ import sys
 import threading
 import socket
 
-import packet_functions
+from packet_functions import *
 
 def user_input(name):
     response = input("Input: ")

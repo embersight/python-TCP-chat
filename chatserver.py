@@ -3,7 +3,7 @@ import socket
 import logging
 import threading
 
-import packet_functions
+from packet_functions import *
 
 def new_client(connection_list, clientsocket):
     while True:
