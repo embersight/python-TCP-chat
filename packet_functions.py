@@ -38,7 +38,7 @@ def receive_packet(connection):
 
     head = b''
     while amount_received < amount_expected:
-        head = sock.recv(12)
+        data = connection.recv(12)
         amount_received += len(data)
         if len(data)>0:
             head += data
