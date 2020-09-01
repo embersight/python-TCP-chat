@@ -47,7 +47,7 @@ def main():
             name = "Default"
     else:
         name = args["name"]
-    print(f'Your name will be {name} for the chat.\n')
+    print(f'Your name will be named {name} for the chat.\n')
 
     try:
         # Socket setup
