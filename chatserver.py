@@ -38,7 +38,7 @@ def new_client(connection_list, version, clientsocket, address):
 
         elif message_type_from_packet(packet)==MessageType.COMMAND.value:
 
-            if(message_from_packet(packet)==quit() or message_from_packet(packet)==exit()):
+            if(message_from_packet(packet)=="quit()" or message_from_packet(packet)=="exit()"):
                 logging.info(f'Connection from {addr} is being withdrawn.')
                 connection_list.pop((clientsocket,address))
                 for connection in connection_list:
