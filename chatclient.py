@@ -5,6 +5,10 @@ import socket
 
 from packet_functions import *
 
+# Chat Functions
+# quit() or exit()
+# members()
+
 def user_input():
     print()
     sys.stdout.write("\033[F"+"\033[K") #previous line and delete
@@ -14,12 +18,13 @@ def user_input():
 
 def continuously_send(connection, version):
     while True:
+        type = MessageType.CHAT.value
         message = user_input()
         if message=="" or message==" ":
             continue
-        if message=="exit()":
-            break
-        send_packet(connection, form_packet(version,MessageType.CHAT.value,message))
+        if message=="exit()" or message=="quit()":
+            type = MessageType.COMMAND.value
+        send_packet(connection, form_packet(version,type,message))
 
 def continuously_receive(connection):
     while True:

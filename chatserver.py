@@ -30,9 +30,16 @@ def new_client(connection_list, version, clientsocket, address):
 
     while True:
         packet = receive_packet(clientsocket)
-        logging.info(f'{name} said "{message_from_packet(packet)}".')
-        for connection in connection_list:
-            send_packet(connection[0], form_packet(version, MessageType.CHAT.value, f'{name}: {message_from_packet(packet)}'))
+        if message_type_from_packet(packet)==MessageType.CHAT.value:
+            logging.info(f'{name} said "{message_from_packet(packet)}".')
+            for connection in connection_list:
+                send_packet(connection[0], form_packet(version, MessageType.CHAT.value, f'{name}: {message_from_packet(packet)}'))
+        elif message_type_from_packet(packet)==MessageType.COMMAND.value:
+            if(message_from_packet(packet)==quit() or message_from_packet(packet)==exit()):
+                connection_list.pop((clientsocket,address))
+                exit()
+        else:
+            pass
 
 def main():
     # Command Line Parser
