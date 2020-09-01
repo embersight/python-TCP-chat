@@ -88,11 +88,11 @@ def main():
                 break
 
     except socket.error as err:
-        print(f'Socket failed with error {err}.')
+        pass
     except KeyboardInterrupt:
-        print(f'Socket connection manually closed.')
+        pass
     except:
-        print(f'Socket unknown error occured.')
+        pass
 
 
 if __name__ == '__main__':
