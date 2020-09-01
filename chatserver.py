@@ -8,6 +8,7 @@ from packet_functions import *
 def new_client(connection_list, clientsocket):
     while True:
         packet = receive_packet(clientsocket)
+        logging.info(f'{clientsocket} said "{message_from_packet}".')
         for connection in connection_list:
             send_packet(connection, packet)
 
