@@ -99,6 +99,8 @@ def main():
 
             except (BlockingIOError, InterruptedError, ConnectionAbortedError):
                 pass
+            except KeyboardInterrupt:
+                break
             except:
                 pass
 
@@ -117,6 +119,11 @@ def main():
         logging.error(f'Socket connection manually closed.')
     except:
         logging.error(f'Socket unknown error occured.')
+    finally:
+        try:
+            close_socket(s)
+        except:
+            pass
 
 if __name__ == '__main__':
     main()
