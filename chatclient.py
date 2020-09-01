@@ -17,7 +17,7 @@ def continuously_send(connection, version):
         message = user_input()
         if message=="" or message==" ":
             continue
-        if message=="exit()"):
+        if message=="exit()":
             break
         send_packet(connection, form_packet(version,MessageType.CHAT.value,message))
 
@@ -71,7 +71,7 @@ def main():
         output_thread.start()
 
         # Chat Input
-        user_input_thread = threading.Thread(target=continuously_send, args=[s, name, version, message_type])
+        user_input_thread = threading.Thread(target=continuously_send, args=[s,version])
         user_input_thread.daemon = False
         user_input_thread.start()
 
@@ -83,12 +83,6 @@ def main():
 
     except socket.error as err:
         print(f'Socket failed with error {err}.')
-    except socket.herror:
-        print(f'Socket failed with an address herror.')
-    except socket.gaierror:
-        print(f'Socket failed with an address gaierror.')
-    except socket.timeout:
-        print(f'Socket failed with a timeout error.')
     except KeyboardInterrupt:
         print(f'Socket connection manually closed.')
     except:

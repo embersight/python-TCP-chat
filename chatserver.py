@@ -24,7 +24,7 @@ def new_client(connection_list, version, clientsocket, address):
 
     connection_list[(clientsocket,address)] = name
     send_packet(clientsocket, form_packet(version, MessageType.SETUP.value, name))
-    time.sleep(0.2)
+    time.sleep(0.5)
     for connection in connection_list:
         send_packet(connection[0], form_packet(version, MessageType.CHAT.value, f'{name} has entered the chat.'))
 
@@ -74,8 +74,9 @@ def main():
                 logging.info(f'Connection from {addr} has been established.')
 
                 user_input_thread = threading.Thread(target=new_client, args=[connection_list,version,c,addr])
-                user_input_thread.daemon = True
+                user_input_thread.daemon = False
                 user_input_thread.start()
+
             except (BlockingIOError, InterruptedError, ConnectionAbortedError):
                 pass
 

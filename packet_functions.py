@@ -3,9 +3,9 @@ import struct
 from enum import Enum
 
 class MessageType(Enum):
-    SETUP = 0
-    COMMAND = 1
-    CHAT = 2
+    SETUP    = 0
+    COMMAND  = 1
+    CHAT     = 2
 
 def close_socket(connection):
     try:
