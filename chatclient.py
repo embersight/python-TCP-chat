@@ -47,7 +47,7 @@ def main():
             name = "Default"
     else:
         name = args["name"]
-    print(f'Your name will be {name}.\n')
+    print(f'Your name will be {name} for the chat.\n')
 
     try:
         # Socket setup
@@ -55,15 +55,15 @@ def main():
         s.connect((address, port))
         print(f'Chat has been started.')
 
-        # Chat Output
-        output_thread = threading.Thread(target=continuously_receive, args=[s])
-        output_thread.daemon = False
-        output_thread.start()
-
         # Chat Input
         user_input_thread = threading.Thread(target=continuously_send, args=[s, name, version, message_type])
         user_input_thread.daemon = False
         user_input_thread.start()
+
+        # Chat Output
+        output_thread = threading.Thread(target=continuously_receive, args=[s])
+        output_thread.daemon = False
+        output_thread.start()
 
         while True:
             if not user_input_thread.is_alive():
