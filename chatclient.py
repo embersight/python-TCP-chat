@@ -100,11 +100,11 @@ def main():
         quit()
 
     except socket.error as err:
-        pass
+        quit()
     except KeyboardInterrupt:
-        pass
+        quit()
     except:
-        pass
+        quit()
 
 
 if __name__ == '__main__':
