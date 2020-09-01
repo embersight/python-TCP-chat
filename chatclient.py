@@ -21,7 +21,8 @@ def continuously_send(connection, name, version, message_type):
 
 def continuously_receive(connection):
     packet = receive_packet(connection)
-    sys.stdout.write("\033[K") #clear current line
+    print()
+    sys.stdout.write("\033[F"+"\033[K") #previous line and delete
     print(message_from_packet(packet))
 
 def main():

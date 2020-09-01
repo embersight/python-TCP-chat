@@ -52,7 +52,7 @@ def main():
                     user_input_thread.daemon = True
                     user_input_thread.start()
                 except:
-                    connection_list.remove(c)
+                    pass
             except (BlockingIOError, InterruptedError, ConnectionAbortedError):
                 pass
 
