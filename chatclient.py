@@ -6,6 +6,7 @@ import socket
 from packet_functions import *
 
 def user_input(name):
+    sys.stdout.write("\033[K") #delete current line
     response = input("Input: ")
     sys.stdout.write("\033[F"+"\033[K") #previous line and delete
     return (name+": "+response)
@@ -21,9 +22,9 @@ def continuously_send(connection, name, version, message_type):
 
 def continuously_receive(connection):
     packet = receive_packet(connection)
-    print()
-    sys.stdout.write("\033[F"+"\033[K") #previous line and delete
+    sys.stdout.write("\033[K") #delete current line
     print(message_from_packet(packet))
+    print("Input: ", end='')
 
 def main():
     # Command line parser

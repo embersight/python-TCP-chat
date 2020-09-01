@@ -12,8 +12,8 @@ def close_socket(connection):
         pass
 
 def form_packet(version, message_type, message):
-    head = struct.pack("IiI", version, message_type, len(message))
     body = bytes(message, 'utf-8')
+    head = struct.pack("IiI", version, message_type, len(body))
     packet = head+body
     return packet
 
