@@ -25,6 +25,8 @@ def continuously_send(connection, version):
                 continue
             if message=="exit()" or message=="quit()":
                 type = MessageType.COMMAND.value
+                send_packet(connection, form_packet(version,type,message))
+                break;
 
             send_packet(connection, form_packet(version,type,message))
         except:
@@ -42,6 +44,8 @@ def continuously_receive(connection):
             quit()
 
 def main():
+    print(f'Starting Application')
+
     # Command line parser
     parser = ArgumentParser(add_help=False,description="Ping a port on a certain network")
     requiredArgs = parser.add_argument_group("required arguments")
@@ -92,6 +96,7 @@ def main():
                 print(f'Chat has ended.')
                 close_socket(s)
                 break
+        print(f'\nExiting Application')
         quit()
 
     except socket.error as err:
