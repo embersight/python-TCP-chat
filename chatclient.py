@@ -23,10 +23,16 @@ def continuously_send(connection, version):
             message = user_input()
             if message=="" or message==" ":
                 continue
-            if message=="exit()" or message=="quit()":
+            elif message=="exit()" or message=="quit()":
                 type = MessageType.COMMAND.value
                 send_packet(connection, form_packet(version,type,message))
                 break;
+            elif message=="members()" or message=="users()":
+                type = MessageType.COMMAND.value
+                send_packet(connection, form_packet(version,type,message))
+                break;
+            else:
+                pass
 
             send_packet(connection, form_packet(version,type,message))
         except:
