@@ -61,7 +61,7 @@ def main():
     requiredArgs.add_argument("-p","--port",required=True,help="the port of the server")
     optionalArgs.add_argument("-n","--name",required=False,help="the name you want to go by in chat")
     optionalArgs.add_argument("-h","--help",action="help",default=SUPPRESS,help="show this help message and exit")
-    # Getting All arugments
+    # Getting All arguments
     args = vars(parser.parse_args())
     # Relaying ALL arguments into variables
     address = args["address"]

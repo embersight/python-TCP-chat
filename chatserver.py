@@ -68,7 +68,7 @@ def main():
     requiredArgs.add_argument("-p","--port",required=True,help="the port server listens on")
     requiredArgs.add_argument("-l","--logfile",required=True,help="where it will keep a record of actions")
     optionalArgs.add_argument("-h","--help",action="help",default=SUPPRESS,help="show this help message and exit")
-    # Getting All Arugments
+    # Getting All Arguments
     args = vars(parser.parse_args())
 
     # Relaying ALL Arguments into Variables
@@ -123,7 +123,7 @@ def main():
     except KeyboardInterrupt:
         logging.error(f'Socket connection manually closed.')
     except:
-        logging.error(f'Socket unknown error occured.')
+        logging.error(f'Socket unknown error occurred.')
     finally:
         try:
             close_socket(s)
