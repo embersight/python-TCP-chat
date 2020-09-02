@@ -7,7 +7,7 @@ from packet_functions import *
 
 # Chat Functions
 # quit() or exit()
-# members()
+# members() or users()
 
 def user_input():
     print()
@@ -26,11 +26,11 @@ def continuously_send(connection, version):
             elif message=="exit()" or message=="quit()":
                 type = MessageType.COMMAND.value
                 send_packet(connection, form_packet(version,type,message))
-                break;
+                break
             elif message=="members()" or message=="users()":
                 type = MessageType.COMMAND.value
                 send_packet(connection, form_packet(version,type,message))
-                break;
+                continue
             else:
                 pass
 
@@ -84,12 +84,12 @@ def main():
         send_packet(s, form_packet(version,MessageType.SETUP.value,name))
         packet = receive_packet(s)
         sys.stdout.write("\033[F"+"\033[K") #previous line and delete
-        print(f'Your name will be named {message_from_packet(packet)} for the chat.\n')
-        print(f'Chat has been started.')
+        print(f'Your name will be {message_from_packet(packet)} for the chat.\n')
+        print(f'\tChat has been started.')
 
         # Chat Output
         output_thread = threading.Thread(target=continuously_receive, args=[s])
-        output_thread.daemon = False
+        output_thread.daemon = True
         output_thread.start()
 
         # Chat Input
@@ -99,7 +99,7 @@ def main():
 
         while True:
             if not user_input_thread.is_alive():
-                print(f'Chat has ended.')
+                print(f'\tChat has ended.')
                 close_socket(s)
                 break
         print(f'\nExiting Application')

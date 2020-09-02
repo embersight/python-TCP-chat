@@ -26,7 +26,7 @@ def new_client(connection_list, version, clientsocket, address):
         send_packet(clientsocket, form_packet(version, MessageType.SETUP.value, name))
         time.sleep(0.1)
         for connection in connection_list:
-            send_packet(connection[0], form_packet(version, MessageType.CHAT.value, f'{name} has entered the chat.'))
+            send_packet(connection[0], form_packet(version, MessageType.CHAT.value, f'\t{name} has entered the chat.'))
 
         while True:
             packet = receive_packet(clientsocket)
@@ -34,16 +34,16 @@ def new_client(connection_list, version, clientsocket, address):
 
                 logging.info(f'{name} said "{message_from_packet(packet)}".')
                 for connection in connection_list:
-                    send_packet(connection[0], form_packet(version, MessageType.CHAT.value, f'{name}: {message_from_packet(packet)}'))
+                    send_packet(connection[0], form_packet(version, MessageType.CHAT.value, f'[*] {name}: {message_from_packet(packet)}'))
 
             elif message_type_from_packet(packet)==MessageType.COMMAND.value:
 
                 if(message_from_packet(packet)=="quit()" or message_from_packet(packet)=="exit()"):
                     raise SystemExit
                 elif(message_from_packet(packet)=="members()" or message_from_packet(packet)=="users()"):
-                    send_packet(clientsocket, form_packet(version, MessageType.COMMAND.value, f'User / Member List:'))
+                    send_packet(clientsocket, form_packet(version, MessageType.COMMAND.value, f'\tUser / Member List:'))
                     for connection in connection_list:
-                        send_packet(clientsocket, form_packet(version, MessageType.CHAT.value, f'\t{connection_list[connection]}'))
+                        send_packet(clientsocket, form_packet(version, MessageType.CHAT.value, f'\t- {connection_list[connection]}'))
                 else:
                     pass
             else:
@@ -55,7 +55,7 @@ def new_client(connection_list, version, clientsocket, address):
         except:
             pass
         for connection in connection_list:
-            send_packet(connection[0], form_packet(version, MessageType.CHAT.value, f'{name} has left the chat'))
+            send_packet(connection[0], form_packet(version, MessageType.CHAT.value, f'\t{name} has left the chat'))
         exit()
 
 
