@@ -1,15 +1,13 @@
 import sys
 import threading
 import time
+import readchar
 
-input_lock = False
 
 def user_input():
-    input_lock = True
     print()
     sys.stdout.write("\033[F"+"\033[K") #previous line and delete
     response = input("Input: ")
-    input_lock = False
     sys.stdout.write("\033[F"+"\033[K") #previous line and delete
     return response
 
@@ -21,14 +19,37 @@ def continuously_send():
 def continuously_receive():
     while True:
         time.sleep(1)
-        if input_lock==False:
-            print("",end='\n',flush=True)
+        print("",end='\n',flush=True)
         sys.stdout.write("\033[F"+"\033[K") #previous line and delete
         print("Some Output has been displayed.")
         print("Input: ", end='', flush=True)
 
+def rtinput(prompt):
+    string = ""
+    print(f'{prompt}',end="",flush=True)
+    while True:
+        key = readchar.readkey()
+        if key==readchar.key.ENTER
+            print("",end="\n",flush=True)
+            break
+        elif key==readchar.key.BACKSPACE:
+            print("",end="\n",flush=True)
+            sys.stdout.write("\033[F"+"\033[K")
+            string = string[:-1]
+            print(prompt+string,end="",flush=True)
+        elif ord(key)>=32:
+            print(key,end="",flush=True)
+            string += key
+        else:
+            pass
+    return string
+
 def main():
     print(f'Starting Application')
+    answer = rtinput("Input: ")
+    print(f'{answer}')
+
+    """
     # Chat Input
     user_input_thread = threading.Thread(target=continuously_send, args=[])
     user_input_thread.daemon = True
@@ -45,6 +66,6 @@ def main():
         if not user_input_thread.is_alive():
             print(f'\nExiting Application')
             break
-
+    """
 if __name__ == '__main__':
     main()
