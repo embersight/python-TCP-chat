@@ -22,7 +22,7 @@ def rtinput(prompt, user_input):
             print("",end="\n",flush=True)
             sys.stdout.write("\033[F"+"\033[K")
             user_input = user_input[:-1]
-            print(prompt+user_input,end="",flush=True)
+            print(f'{prompt}{user_input}',end="",flush=True)
         elif ord(key)>=32:
             print(key,end="",flush=True)
             user_input += key
@@ -34,7 +34,6 @@ def get_input(user_input):
     sys.stdout.write("\033[F"+"\033[K") #previous line and delete
     response = rtinput("Input: ",user_input)
     sys.stdout.write("\033[F"+"\033[K") #previous line and delete
-    return response
 
 def continuously_send(connection, version, user_input):
     while True:
@@ -57,6 +56,7 @@ def continuously_send(connection, version, user_input):
             send_packet(connection, form_packet(version,type,user_input))
         except:
             quit()
+    print("FINISHED!")
 
 def continuously_receive(connection, user_input):
     while True:
