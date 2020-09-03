@@ -3,6 +3,7 @@ import sys
 import threading
 import socket
 import readchar
+import time
 
 from packet_functions import *
 
@@ -42,6 +43,7 @@ def rtinput():
 
 def get_input():
     global user_input
+    time.sleep(0.3)
     print("",end="\n")
     sys.stdout.write("\033[F"+"\033[K") #previous line and delete
     rtinput()
