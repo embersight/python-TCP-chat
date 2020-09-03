@@ -21,7 +21,6 @@ prompt = "Input"
 def rtinput():
     global user_input
     global prompt
-    user_input = ""
     print(f'{prompt}: ',end="",flush=True)
     while True:
         key = readchar.readkey()
@@ -43,7 +42,8 @@ def rtinput():
 
 def get_input():
     global user_input
-    time.sleep(0.3)
+    user_input = ""
+    time.sleep(0.2)
     print("",end="\n")
     sys.stdout.write("\033[F"+"\033[K") #previous line and delete
     rtinput()
