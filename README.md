@@ -1,5 +1,3 @@
----
-
 # python-TCP-chat
 
 This is a python network TCP chat that contains both the server and client.
@@ -24,5 +22,3 @@ python3 chatclient.py -a ADDRESS -p PORT
 ## While in the Chat as a User:
 type a name. if the name is taken, it will assign a unique number to it.
 type "chat()" and press enter to see how to operate the chat.
-
----
