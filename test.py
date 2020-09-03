@@ -29,7 +29,7 @@ def rtinput(prompt):
     print(f'{prompt}',end="",flush=True)
     while True:
         key = readchar.readkey()
-        if key==readchar.key.ENTER
+        if key==readchar.key.ENTER:
             print("",end="\n",flush=True)
             break
         elif key==readchar.key.BACKSPACE:

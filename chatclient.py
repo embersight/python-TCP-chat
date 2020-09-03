@@ -30,7 +30,7 @@ def rtinput(prompt, user_input):
             pass
     return string
 
-def user_input(user_input):
+def get_input(user_input):
     print()
     sys.stdout.write("\033[F"+"\033[K") #previous line and delete
     response = rtinput("Input: ",user_input)
@@ -41,7 +41,7 @@ def continuously_send(connection, version, user_input):
     while True:
         try:
             type = MessageType.CHAT.value
-            message = user_input(user_input)
+            message = get_input(user_input)
             if message=="" or message==" ":
                 continue
             elif message=="exit()" or message=="quit()":
