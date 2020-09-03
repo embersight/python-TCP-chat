@@ -9,11 +9,15 @@ from packet_functions import *
 # Chat Functions
 # quit() or exit()
 # members() or users()
+# chat()
+
+# private(NAME) or whisper(NAME) NAME="" for global
+
 
 user_input = ""
 prompt = "Input"
 
-def rtinput(prompt):
+def rtinput():
     global user_input
     global prompt
     user_input = ""
@@ -28,8 +32,6 @@ def rtinput(prompt):
             sys.stdout.write("\033[F"+"\033[K")
             user_input = user_input[:-1]
             print(f'{prompt}: {user_input}',end="",flush=True)
-        elif key==readchar.key.ESC:
-            quit()
         else:
             try:
                 if(ord(key)>=32):
@@ -58,6 +60,10 @@ def continuously_send(connection, version):
                 send_packet(connection, form_packet(version,type,user_input))
                 break
             elif user_input=="members()" or user_input=="users()":
+                type = MessageType.COMMAND.value
+                send_packet(connection, form_packet(version,type,user_input))
+                continue
+            elif user_input=="chat()":
                 type = MessageType.COMMAND.value
                 send_packet(connection, form_packet(version,type,user_input))
                 continue

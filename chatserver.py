@@ -41,9 +41,17 @@ def new_client(connection_list, version, clientsocket, address):
                 if(message_from_packet(packet)=="quit()" or message_from_packet(packet)=="exit()"):
                     raise SystemExit
                 elif(message_from_packet(packet)=="members()" or message_from_packet(packet)=="users()"):
-                    send_packet(clientsocket, form_packet(version, MessageType.COMMAND.value, f'\tUser / Member List:'))
+                    send_packet(clientsocket, form_packet(version, MessageType.CHAT.value, f'\tUser / Member List:'))
                     for connection in connection_list:
                         send_packet(clientsocket, form_packet(version, MessageType.CHAT.value, f'\t- {connection_list[connection]}'))
+                elif(message_from_packet(packet)=="chat()"):
+                    send_packet(clientsocket, form_packet(version, MessageType.CHAT.value, f'\tChat Indicators:'))
+                    send_packet(clientsocket, form_packet(version, MessageType.CHAT.value, f'\t- "[*] NAME" | global message from NAME'))
+                    send_packet(clientsocket, form_packet(version, MessageType.CHAT.value, f'\t- "[+] NAME" | private message from NAME'))
+                    send_packet(clientsocket, form_packet(version, MessageType.CHAT.value, f'\tChat Commands:'))
+                    send_packet(clientsocket, form_packet(version, MessageType.CHAT.value, f'\t- "quit()" or "exit()"     | quit the chat'))
+                    send_packet(clientsocket, form_packet(version, MessageType.CHAT.value, f'\t- "users()" or "members()" | see who is in the chat'))
+                    send_packet(clientsocket, form_packet(version, MessageType.CHAT.value, f'\t- "chat()"                 | display this message'))
                 else:
                     pass
             else:
