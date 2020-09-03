@@ -15,20 +15,19 @@ def rtinput(prompt, user_input):
     print(f'{prompt}',end="",flush=True)
     while True:
         key = readchar.readkey()
-        if key==readchar.key.ENTER
+        if key==readchar.key.ENTER:
             print("",end="\n",flush=True)
             break
         elif key==readchar.key.BACKSPACE:
             print("",end="\n",flush=True)
             sys.stdout.write("\033[F"+"\033[K")
-            string = string[:-1]
-            print(prompt+string,end="",flush=True)
+            user_input = user_input[:-1]
+            print(prompt+user_input,end="",flush=True)
         elif ord(key)>=32:
             print(key,end="",flush=True)
-            string += key
+            user_input += key
         else:
             pass
-    return string
 
 def get_input(user_input):
     print()
@@ -41,21 +40,21 @@ def continuously_send(connection, version, user_input):
     while True:
         try:
             type = MessageType.CHAT.value
-            message = get_input(user_input)
-            if message=="" or message==" ":
+            get_input(user_input)
+            if user_input=="" or user_input==" ":
                 continue
-            elif message=="exit()" or message=="quit()":
+            elif user_input=="exit()" or user_input=="quit()":
                 type = MessageType.COMMAND.value
-                send_packet(connection, form_packet(version,type,message))
+                send_packet(connection, form_packet(version,type,user_input))
                 break
-            elif message=="members()" or message=="users()":
+            elif user_input=="members()" or user_input=="users()":
                 type = MessageType.COMMAND.value
-                send_packet(connection, form_packet(version,type,message))
+                send_packet(connection, form_packet(version,type,user_input))
                 continue
             else:
                 pass
 
-            send_packet(connection, form_packet(version,type,message))
+            send_packet(connection, form_packet(version,type,user_input))
         except:
             quit()
 
