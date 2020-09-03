@@ -88,8 +88,6 @@ def continuously_receive(connection):
             quit()
 
 def main():
-    print(f'Starting Application')
-
     # Command line parser
     parser = ArgumentParser(add_help=False,description="Ping a port on a certain network")
     requiredArgs = parser.add_argument_group("required arguments")
