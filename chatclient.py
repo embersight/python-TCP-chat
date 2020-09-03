@@ -10,36 +10,41 @@ from packet_functions import *
 # quit() or exit()
 # members() or users()
 
-def rtinput(prompt, user_input):
+user_input = ""
+
+def rtinput(prompt):
+    global user_input
     user_input = ""
     print(f'{prompt}',end="",flush=True)
     while True:
         key = readchar.readkey()
         if key==readchar.key.ENTER:
-            print("",end="\n",flush=True)
+            print("",end="\n")
             break
         elif key==readchar.key.BACKSPACE:
-            print("",end="\n",flush=True)
+            print("",end="\n")
             sys.stdout.write("\033[F"+"\033[K")
             user_input = user_input[:-1]
-            print(f'{prompt}{user_input}',end="",flush=True)
+            print(f'{prompt+user_input}',end="",flush=True)
         elif ord(key)>=32:
             print(key,end="",flush=True)
             user_input += key
         else:
             pass
 
-def get_input(user_input):
-    print("",end="\n",flush=True)
+def get_input():
+    global user_input
+    print("",end="\n")
     sys.stdout.write("\033[F"+"\033[K") #previous line and delete
-    rtinput("Input: ", user_input)
+    rtinput("Input: ")
     sys.stdout.write("\033[F"+"\033[K") #previous line and delete
 
-def continuously_send(connection, version, user_input):
+def continuously_send(connection, version):
+    global user_input
     while True:
         try:
             type = MessageType.CHAT.value
-            get_input(user_input)
+            get_input()
             if user_input=="" or user_input==" ":
                 continue
             elif user_input=="exit()" or user_input=="quit()":
@@ -54,16 +59,18 @@ def continuously_send(connection, version, user_input):
                 send_packet(connection, form_packet(version,type,user_input))
         except:
             quit()
-    print("FINISHED!")
 
-def continuously_receive(connection, user_input):
+def continuously_receive(connection):
+    global user_input
     while True:
         try:
             packet = receive_packet(connection)
             print("",end='\n',flush=True)
             sys.stdout.write("\033[F"+"\033[K") #previous line and delete
             print(message_from_packet(packet))
-            print("Input: "+user_input, end='', flush=True)
+            print("",end='\n',flush=True)
+            sys.stdout.write("\033[F"+"\033[K") #previous line and delete
+            print("Input: "+user_input, end="", flush=True)
         except:
             quit()
 
@@ -105,15 +112,13 @@ def main():
         print(f'Your name will be {message_from_packet(packet)} for the chat.\n')
         print(f'\tChat has been started.')
 
-        user_input = ""
-
         # Chat Output
-        output_thread = threading.Thread(target=continuously_receive, args=[s, user_input])
+        output_thread = threading.Thread(target=continuously_receive, args=[s])
         output_thread.daemon = True
         output_thread.start()
 
         # Chat Input
-        user_input_thread = threading.Thread(target=continuously_send, args=[s,version,user_input])
+        user_input_thread = threading.Thread(target=continuously_send, args=[s,version])
         user_input_thread.daemon = False
         user_input_thread.start()
 
