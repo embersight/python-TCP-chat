@@ -1,5 +1,0 @@
-
-Future Updates:
-  fix output bug (dual writes with threads)
-  private messaging
-  encoding (encryption)
