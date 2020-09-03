@@ -11,11 +11,13 @@ from packet_functions import *
 # members() or users()
 
 user_input = ""
+prompt = "Input"
 
 def rtinput(prompt):
     global user_input
+    global prompt
     user_input = ""
-    print(f'{prompt}',end="",flush=True)
+    print(f'{prompt}: ',end="",flush=True)
     while True:
         key = readchar.readkey()
         if key==readchar.key.ENTER:
@@ -25,18 +27,22 @@ def rtinput(prompt):
             print("",end="\n")
             sys.stdout.write("\033[F"+"\033[K")
             user_input = user_input[:-1]
-            print(f'{prompt+user_input}',end="",flush=True)
-        elif ord(key)>=32:
-            print(key,end="",flush=True)
-            user_input += key
+            print(f'{prompt}: {user_input}',end="",flush=True)
+        elif key==readchar.key.ESC:
+            quit()
         else:
-            pass
+            try:
+                if(ord(key)>=32):
+                    print(key,end="",flush=True)
+                    user_input += key
+            except:
+                pass
 
 def get_input():
     global user_input
     print("",end="\n")
     sys.stdout.write("\033[F"+"\033[K") #previous line and delete
-    rtinput("Input: ")
+    rtinput()
     sys.stdout.write("\033[F"+"\033[K") #previous line and delete
 
 def continuously_send(connection, version):
@@ -62,6 +68,7 @@ def continuously_send(connection, version):
 
 def continuously_receive(connection):
     global user_input
+    global prompt
     while True:
         try:
             packet = receive_packet(connection)
@@ -70,7 +77,7 @@ def continuously_receive(connection):
             print(message_from_packet(packet))
             print("",end='\n',flush=True)
             sys.stdout.write("\033[F"+"\033[K") #previous line and delete
-            print("Input: "+user_input, end="", flush=True)
+            print(f'{prompt}: {user_input}', end="", flush=True)
         except:
             quit()
 
