@@ -9,10 +9,14 @@ from packet_functions import *
 # quit() or exit()
 # members() or users()
 
+input_lock = False
+
 def user_input():
+    input_lock = True
     print()
     sys.stdout.write("\033[F"+"\033[K") #previous line and delete
     response = input("Input: ")
+    input_lock = False
     sys.stdout.write("\033[F"+"\033[K") #previous line and delete
     return response
 
@@ -42,7 +46,8 @@ def continuously_receive(connection):
     while True:
         try:
             packet = receive_packet(connection)
-            print("",end='\n',flush=True)
+            if input_lock==False:
+                print("",end='\n',flush=True)
             sys.stdout.write("\033[F"+"\033[K") #previous line and delete
             print(message_from_packet(packet))
             print("Input: ", end='', flush=True)
