@@ -30,9 +30,9 @@ def rtinput(prompt, user_input):
             pass
 
 def get_input(user_input):
-    print()
+    print("",end="\n",flush=True)
     sys.stdout.write("\033[F"+"\033[K") #previous line and delete
-    response = rtinput("Input: ",user_input)
+    rtinput("Input: ", user_input)
     sys.stdout.write("\033[F"+"\033[K") #previous line and delete
 
 def continuously_send(connection, version, user_input):
@@ -51,9 +51,7 @@ def continuously_send(connection, version, user_input):
                 send_packet(connection, form_packet(version,type,user_input))
                 continue
             else:
-                pass
-
-            send_packet(connection, form_packet(version,type,user_input))
+                send_packet(connection, form_packet(version,type,user_input))
         except:
             quit()
     print("FINISHED!")
