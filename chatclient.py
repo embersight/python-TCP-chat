@@ -4,7 +4,6 @@ import threading
 import socket
 import readchar
 import time
-from cryptography.fernet import Fernet
 from packet_functions import *
 
 # Chat Functions
@@ -15,7 +14,6 @@ from packet_functions import *
 
 user_input = ""
 prompt = "Input"
-key = ""
 
 def rtinput():
     global user_input
@@ -50,7 +48,6 @@ def get_input():
 
 def continuously_send(connection, version):
     global user_input
-    global key
     while True:
         try:
             type = MessageType.CHAT.value
@@ -59,31 +56,30 @@ def continuously_send(connection, version):
                 continue
             elif user_input=="exit()" or user_input=="quit()":
                 type = MessageType.COMMAND.value
-                send_packet(connection, form_packet(version,type,user_input,key))
+                send_packet(connection, form_packet(version,type,user_input))
                 break
             elif user_input=="members()" or user_input=="users()":
                 type = MessageType.COMMAND.value
-                send_packet(connection, form_packet(version,type,user_input,key))
+                send_packet(connection, form_packet(version,type,user_input))
                 continue
             elif user_input=="chat()":
                 type = MessageType.COMMAND.value
-                send_packet(connection, form_packet(version,type,user_input,key))
+                send_packet(connection, form_packet(version,type,user_input))
                 continue
             else:
-                send_packet(connection, form_packet(version,type,user_input,key))
+                send_packet(connection, form_packet(version,type,user_input))
         except:
             quit()
 
 def continuously_receive(connection):
     global user_input
     global prompt
-    global key
     while True:
         try:
             packet = receive_packet(connection)
             print("",end='\n',flush=True)
             sys.stdout.write("\033[F"+"\033[K") #previous line and delete
-            print(message_from_packet(packet,key))
+            print(message_from_packet(packet))
             print("",end='\n',flush=True)
             sys.stdout.write("\033[F"+"\033[K") #previous line and delete
             print(f'{prompt}: {user_input}', end="", flush=True)
@@ -91,8 +87,6 @@ def continuously_receive(connection):
             quit()
 
 def main():
-    global key
-
     # Command line parser
     parser = ArgumentParser(add_help=False,description="Ping a port on a certain network")
     requiredArgs = parser.add_argument_group("required arguments")
@@ -121,13 +115,11 @@ def main():
         # Socket setup
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((address, port))
-        key = Fernet.generate_key()
-        packet = form_packet(version, MessageType.SETUP.value, key, b'', usekey=False)
-        send_packet(s, packet)
-        send_packet(s, form_packet(version,MessageType.SETUP.value,name,key))
+
+        send_packet(s, form_packet(version,MessageType.SETUP.value,name))
         packet = receive_packet(s)
         sys.stdout.write("\033[F"+"\033[K") #previous line and delete
-        print(f'Your name will be {message_from_packet(packet,key)} for the chat.\n')
+        print(f'Your name will be {message_from_packet(packet)} for the chat.\n')
         print(f'\tChat has been started.')
 
         # Chat Output
