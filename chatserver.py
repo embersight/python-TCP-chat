@@ -3,12 +3,12 @@ import socket
 import logging
 import threading
 import time
-
 from packet_functions import *
 
 def new_client(connection_list, version, clientsocket, address):
+    key = ""
     try:
-        key = message_from_packet(receive_packet(clientsocket),"")
+        key = message_from_packet(receive_packet(clientsocket),b'',usekey=False)
 
         packet = receive_packet(clientsocket)
         name = message_from_packet(packet,key)

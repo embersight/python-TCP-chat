@@ -18,11 +18,16 @@ def close_socket(connection):
     except:
         pass
 
-def form_packet(version, message_type, message, key):
-    body = bytes(message, 'utf-8')
-    if key!="":
+def form_packet(version, message_type, message, key, usekey=True):
+    if usekey:
+        body = message.encode("utf-8")
+    else:
+        body = message
+
+    if usekey:
         f = Fernet(key)
         body = f.encrypt(body)
+    print("asa")
     head = struct.pack("IiI", version, message_type, len(body))
     return (head+body)
 
@@ -34,13 +39,13 @@ def message_type_from_packet(packet):
     version, message_type, message_length = struct.unpack("IiI", packet[:struct.calcsize("IiI")])
     return message_type
 
-def message_from_packet(packet, key):
+def message_from_packet(packet, key, usekey=True):
     version, message_type, message_length = struct.unpack("IiI", packet[:struct.calcsize("IiI")])
     message = packet[struct.calcsize("IiI"):]
-    if key!="":
+    if usekey:
         f = Fernet(key)
-        message = f.decrypt(message)
-    return (message.decode("utf-8"))
+        message = f.decrypt(message).decode("utf-8")
+    return message
 
 def send_packet(connection, packet):
     connection.send(packet)

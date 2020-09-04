@@ -5,7 +5,6 @@ import socket
 import readchar
 import time
 from cryptography.fernet import Fernet
-
 from packet_functions import *
 
 # Chat Functions
@@ -14,19 +13,9 @@ from packet_functions import *
 # chat()
 # message(NAME)
 
-
 user_input = ""
 prompt = "Input"
 key = ""
-
-"""
-message = "my deep dark secret".encode()
-key = Fernet.generate_key()
-f = Fernet(key)
-encrypted = f.encrypt(message)
-decrypted = f.decrypt(encrypted)
-message == decrypted
-"""
 
 def rtinput():
     global user_input
@@ -61,6 +50,7 @@ def get_input():
 
 def continuously_send(connection, version):
     global user_input
+    global key
     while True:
         try:
             type = MessageType.CHAT.value
@@ -87,6 +77,7 @@ def continuously_send(connection, version):
 def continuously_receive(connection):
     global user_input
     global prompt
+    global key
     while True:
         try:
             packet = receive_packet(connection)
@@ -100,6 +91,8 @@ def continuously_receive(connection):
             quit()
 
 def main():
+    global key
+
     # Command line parser
     parser = ArgumentParser(add_help=False,description="Ping a port on a certain network")
     requiredArgs = parser.add_argument_group("required arguments")
@@ -128,10 +121,9 @@ def main():
         # Socket setup
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((address, port))
-
         key = Fernet.generate_key()
-        send_packet(s, form_packet(version,MessageType.SETUP.value,key, ""))
-
+        packet = form_packet(version, MessageType.SETUP.value, key, b'', usekey=False)
+        send_packet(s, packet)
         send_packet(s, form_packet(version,MessageType.SETUP.value,name,key))
         packet = receive_packet(s)
         sys.stdout.write("\033[F"+"\033[K") #previous line and delete
