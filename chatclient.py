@@ -4,6 +4,7 @@ import threading
 import socket
 import readchar
 import time
+from cryptography.fernet import Fernet
 
 from packet_functions import *
 
@@ -11,12 +12,21 @@ from packet_functions import *
 # quit() or exit()
 # members() or users()
 # chat()
-
-# private(NAME) or whisper(NAME) NAME="" for global
+# message(NAME)
 
 
 user_input = ""
 prompt = "Input"
+key = ""
+
+"""
+message = "my deep dark secret".encode()
+key = Fernet.generate_key()
+f = Fernet(key)
+encrypted = f.encrypt(message)
+decrypted = f.decrypt(encrypted)
+message == decrypted
+"""
 
 def rtinput():
     global user_input
@@ -59,18 +69,18 @@ def continuously_send(connection, version):
                 continue
             elif user_input=="exit()" or user_input=="quit()":
                 type = MessageType.COMMAND.value
-                send_packet(connection, form_packet(version,type,user_input))
+                send_packet(connection, form_packet(version,type,user_input,key))
                 break
             elif user_input=="members()" or user_input=="users()":
                 type = MessageType.COMMAND.value
-                send_packet(connection, form_packet(version,type,user_input))
+                send_packet(connection, form_packet(version,type,user_input,key))
                 continue
             elif user_input=="chat()":
                 type = MessageType.COMMAND.value
-                send_packet(connection, form_packet(version,type,user_input))
+                send_packet(connection, form_packet(version,type,user_input,key))
                 continue
             else:
-                send_packet(connection, form_packet(version,type,user_input))
+                send_packet(connection, form_packet(version,type,user_input,key))
         except:
             quit()
 
@@ -82,7 +92,7 @@ def continuously_receive(connection):
             packet = receive_packet(connection)
             print("",end='\n',flush=True)
             sys.stdout.write("\033[F"+"\033[K") #previous line and delete
-            print(message_from_packet(packet))
+            print(message_from_packet(packet,key))
             print("",end='\n',flush=True)
             sys.stdout.write("\033[F"+"\033[K") #previous line and delete
             print(f'{prompt}: {user_input}', end="", flush=True)
@@ -119,10 +129,13 @@ def main():
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((address, port))
 
-        send_packet(s, form_packet(version,MessageType.SETUP.value,name))
+        key = Fernet.generate_key()
+        send_packet(s, form_packet(version,MessageType.SETUP.value,key, ""))
+
+        send_packet(s, form_packet(version,MessageType.SETUP.value,name,key))
         packet = receive_packet(s)
         sys.stdout.write("\033[F"+"\033[K") #previous line and delete
-        print(f'Your name will be {message_from_packet(packet)} for the chat.\n')
+        print(f'Your name will be {message_from_packet(packet,key)} for the chat.\n')
         print(f'\tChat has been started.')
 
         # Chat Output

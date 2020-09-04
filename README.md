@@ -11,14 +11,14 @@ NOTE: The output may look weird or buggy depending on your terminal. For best re
 python3 chatserver.py -p PORT -l LOGFILE
 
   PORT can be a random port like 40015 and LOGFILE can just be "log".
-  
+
 ---
 
 ## Running the Chat Client:
 python3 chatclient.py -a ADDRESS -p PORT
 
   PORT should be the port you used for the server, ADDRESS should be the IP of the network the server is running on.
-  
+
 ---
 
 ## While in the Chat as a User:
@@ -29,6 +29,6 @@ type "chat()" and press enter to see how to operate the chat.
 ---
 
 ## Future Work
-* Fix Output Bug (two threads overlap)
 * Private Messaging
-* Encryption of message
+* Move through user input for changes (arrows)
+* Refactor and Reorganize code
