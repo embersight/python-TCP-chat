@@ -58,6 +58,7 @@ def new_client(connection_list, version, clientsocket, address):
                 pass
     except:
         logging.info(f'Connection from {address} has been withdrawn.')
+        close_socket(clientsocket)
         try:
             connection_list.pop((clientsocket,address))
         except:

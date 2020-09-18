@@ -174,7 +174,7 @@ def main():
                 print(f'\tChat has ended.')
                 close_socket(s)
                 break
-        print(f'\nExiting Application')
+        print(f'\nExiting Program')
         quit()
 
     except socket.error as err:

@@ -30,5 +30,4 @@ type "chat()" and press enter to see how to operate the chat.
 
 ## Future Work
 * Private Messaging
-* Move through user input for changes (arrows)
 * Refactor and Reorganize code

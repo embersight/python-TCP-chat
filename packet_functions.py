@@ -32,14 +32,14 @@ def message_type_from_packet(packet):
     return message_type
 
 def message_from_packet(packet):
-    message = packet[12:].decode("utf-8")
+    message = packet[struct.calcsize("IiI"):].decode("utf-8")
     return message
 
 def send_packet(connection, packet):
     connection.send(packet)
 
 def receive_packet(connection):
-    head = connection.recv(12)
+    head = connection.recv(struct.calcsize("IiI"))
     version, message_type, message_length = struct.unpack("IiI", head)
     body = connection.recv(message_length)
     return (head+body)
