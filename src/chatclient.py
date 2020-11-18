@@ -72,7 +72,7 @@ def rtinput():
 def get_input():
     global user_input
     user_input = ""
-    time.sleep(0.2)
+    time.sleep(0.4)
     print("",end="\n")
     sys.stdout.write("\033[F"+"\033[K") #previous line and delete
     rtinput()

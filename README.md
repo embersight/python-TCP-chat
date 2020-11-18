@@ -30,4 +30,5 @@ type "chat()" and press enter to see how to operate the chat.
 
 ## Future Work
 * Private Messaging
+* UDP for fast transmit of packets
 * Refactor and Reorganize code
