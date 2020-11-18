@@ -4,7 +4,7 @@ import threading
 import socket
 import readchar
 import time
-from packet_functions import *
+from utils.packet_functions import *
 
 # Chat Functions
 # quit() or exit()

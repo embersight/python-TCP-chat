@@ -3,7 +3,7 @@ import socket
 import logging
 import threading
 import time
-from packet_functions import *
+from utils.packet_functions import *
 
 def new_client(connection_list, version, clientsocket, address):
     try:
