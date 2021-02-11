@@ -1,4 +1,4 @@
-#    Light Weight Dynamic Memory Allocation Tracker Library
+#    TCP Chatroom Application
 #    Author:  Justin C Presley
 #    Github:  https://github.com/embersight
 #    Contact: justincpresley@gmail.com
