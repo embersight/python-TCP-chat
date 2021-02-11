@@ -10,32 +10,37 @@ Since this is self-hosted, everything is completely contained within the environ
 
 > Since this is the case, it might be a perfect way to test any encryption or error detection algorithm. Future updates will tackle this part of the application.
 
-## Running the Chat Server
+## Running
+
+You can run the server and client by going into the [`src`](src) directory.
+
+### The Chat Server
 
 ```
 python3 chatserver.py -p PORT -l LOGFILE
 ```
 
-  PORT can be a random port like 40015 and LOGFILE can just be "log".
+PORT can be a random port like 40015 and LOGFILE can just be "log".
 
 
-## Running the Chat Client:
+### The Chat Client:
 
 ```
 python3 chatclient.py -a ADDRESS -p PORT
 ```
 
-  PORT should be the port you used for the server, ADDRESS should be the IP of the network the server is running on.
+PORT should be the port you used for the server, ADDRESS should be the IP of the network the server is running on.
 
 
-## While in the Chat as a User:
+### While in the Chat as a User:
+
 type a name. if the name is taken, it will assign a unique number to it.
 
 type "chat()" and press enter to see how to operate the chat.
 
 ## License and Authors
 
-cpp-alloctrack is an open source project that is licensed. See [`LICENSE.md`](LICENSE.md) for more information.
+tcp-python-chat is an open source project that is licensed. See [`LICENSE.md`](LICENSE.md) for more information.
 
 The Names of all authors associated with this project are below:
 
@@ -43,6 +48,7 @@ The Names of all authors associated with this project are below:
 
 
 ## Future Work
+
 * Private Messaging
 * UDP version of this application
 * Refactorization
