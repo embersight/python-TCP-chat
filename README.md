@@ -1,11 +1,12 @@
 # tcp-python-chat: A Chatroom Terminal Application based on TCP-IP built in python
 
-This is a python network TCP chat that contains both the server and client.
-The server will be hosted on the current network on a certain port while the client can be ran from any device, any network, any port.
+This is a python network TCP chat application that contains both the server and client. The application runs completely on a terminal. The output will look weird if your terminal does not support [ANSI Escape Codes](https://en.wikipedia.org/wiki/ANSI_escape_code). Popular linux terminals should all support these codes. From the current time of publication, Windows does not support these codes. We used ANSI Escape Codes to get a perfect looking terminal output.
 
-NOTE: The output may look weird or buggy depending on your terminal. For best results, please use terminals that popular linux machines use like the Gnome Terminal.
+Since this is self-hosted, everything is completely contained within the environment which is ideal for privacy as no data is transmitted to the creator (me) in any way.
 
----
+* **HOWEVER, this application has NO encryption and NO error detection.**
+
+Since this is the case, it might be a perfect way to test any encryption or error detection algorithm. Future updates will tackle this part of the application.
 
 ## Running the Chat Server
 
