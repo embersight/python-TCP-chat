@@ -8,14 +8,20 @@ NOTE: The output may look weird or buggy depending on your terminal. For best re
 ---
 
 ## Running the Chat Server
+
+```
 python3 chatserver.py -p PORT -l LOGFILE
+```
 
   PORT can be a random port like 40015 and LOGFILE can just be "log".
 
 ---
 
 ## Running the Chat Client:
+
+```
 python3 chatclient.py -a ADDRESS -p PORT
+```
 
   PORT should be the port you used for the server, ADDRESS should be the IP of the network the server is running on.
 
