@@ -1,4 +1,4 @@
-# tcp-python-chat: A Chatroom Application based on TCP-IP built in python
+# tcp-python-chat: A Chatroom Terminal Application based on TCP-IP built in python
 
 This is a python network TCP chat that contains both the server and client.
 The server will be hosted on the current network on a certain port while the client can be ran from any device, any network, any port.
