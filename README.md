@@ -33,6 +33,14 @@ type a name. if the name is taken, it will assign a unique number to it.
 
 type "chat()" and press enter to see how to operate the chat.
 
+## License and Authors
+
+cpp-alloctrack is an open source project that is licensed. See [`LICENSE.md`](LICENSE.md) for more information.
+
+The Names of all authors associated with this project are below:
+
+  * *Justin Presley* (embersight)
+
 
 ## Future Work
 * Private Messaging
