@@ -1,6 +1,6 @@
-# tcp-python-chat: A Chatroom Terminal Application based on TCP-IP built in python
+# tcp-python-chatroom: A Chatroom Terminal Application based on TCP-IP built in python
 
-This is a python network TCP chat application that contains both the server and client.
+This is a python network TCP chatroom application that contains both the server and client.
 
 The application runs completely on a terminal. The output will look weird if your terminal does not support [ANSI Escape Codes](https://en.wikipedia.org/wiki/ANSI_escape_code). Popular linux terminals should all support these codes. From the current time of publication, Windows does not support these codes. We used ANSI Escape Codes to get a perfect looking terminal output.
 
@@ -36,7 +36,7 @@ PORT should be the port you used for the server, ADDRESS should be the IP of the
 
 At the start of the client application, type a name. if the name is taken, it will assign a unique number to it.
 
-Chat Client Application Programming Interface (API):
+Chatroom Client Application Programming Interface (API):
 ```
 * "quit()" or "exit()"      | quit the chat
 * "members()" or "users()"  | see who is in the chat
@@ -45,7 +45,7 @@ Chat Client Application Programming Interface (API):
 
 ## License and Authors
 
-tcp-python-chat is an open source project that is licensed. See [`LICENSE.md`](LICENSE.md) for more information.
+tcp-python-chatroom is an open source project that is licensed. See [`LICENSE.md`](LICENSE.md) for more information.
 
 The Names of all authors associated with this project are below:
 
