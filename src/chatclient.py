@@ -1,3 +1,8 @@
+#    Light Weight Dynamic Memory Allocation Tracker Library
+#    Author:  Justin C Presley
+#    Github:  https://github.com/embersight
+#    Contact: justincpresley@gmail.com
+
 from argparse import ArgumentParser, SUPPRESS
 import sys
 import threading
