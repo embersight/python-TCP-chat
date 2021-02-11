@@ -6,12 +6,6 @@ import readchar
 import time
 from utils.packet_functions import *
 
-# Chat Functions
-# quit() or exit()
-# members() or users()
-# chat()
-# message(NAME)
-
 user_input = ""
 cursor = 0
 prompt = "Input"

@@ -51,7 +51,8 @@ def new_client(connection_list, version, clientsocket, address):
                     send_packet(clientsocket, form_packet(version, MessageType.CHAT.value, f'\t- "quit()" or "exit()"     | quit the chat'))
                     send_packet(clientsocket, form_packet(version, MessageType.CHAT.value, f'\t- "users()" or "members()" | see who is in the chat'))
                     send_packet(clientsocket, form_packet(version, MessageType.CHAT.value, f'\t- "chat()"                 | display this message'))
-                    send_packet(clientsocket, form_packet(version, MessageType.CHAT.value, f'\t- "message(NAME)"          | private message NAME, use "global" or"" to stop pm'))
+                    send_packet(clientsocket, form_packet(version, MessageType.CHAT.value, f'\tFuture Work:'))
+                    send_packet(clientsocket, form_packet(version, MessageType.CHAT.value, f'\t- "message(NAME)"          | private message NAME, use "global" or "" to stop pm'))
                 else:
                     pass
             else:
