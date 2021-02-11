@@ -32,11 +32,16 @@ python3 chatclient.py -a ADDRESS -p PORT
 PORT should be the port you used for the server, ADDRESS should be the IP of the network the server is running on.
 
 
-### While in the Chat as a User:
+#### While in the Chat as a User:
 
-type a name. if the name is taken, it will assign a unique number to it.
+At the start of the client application, type a name. if the name is taken, it will assign a unique number to it.
 
-type "chat()" and press enter to see how to operate the chat.
+Chat Client Application Programming Interface (API):
+```
+* "quit()" or "exit()"      | quit the chat
+* "members()" or "users()"  | see who is in the chat
+* "chat()"                  | display a help message
+```
 
 ## License and Authors
 
