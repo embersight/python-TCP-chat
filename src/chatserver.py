@@ -1,6 +1,6 @@
 #    TCP Chatroom Application
 #    Author:  Justin C Presley
-#    Github:  https://github.com/embersight
+#    Github:  https://github.com/justincpresley
 #    Contact: justincpresley@gmail.com
 
 from argparse import ArgumentParser, SUPPRESS
