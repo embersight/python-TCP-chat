@@ -49,7 +49,7 @@ tcp-python-chatroom is an open source project that is licensed. See [`LICENSE.md
 
 The Names of all authors associated with this project are below:
 
-  * *Justin Presley* (embersight)
+  * *Justin C Presley* (justincpresley)
 
 
 ## Future Work
